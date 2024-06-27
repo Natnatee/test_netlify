@@ -1,4 +1,5 @@
 import { useState } from "react";
+import axios from "axios";
 
 function Buy() {
   const [formData, setFormData] = useState({
@@ -54,6 +55,15 @@ function Buy() {
 
   const uploadimage = () => {
     document.getElementById(`uploadfileinbuycar`).click();
+  };
+
+  const sendLineNotify = async () => {
+    try {
+      const response = await axios.post('/.netlify/functions/lineNotify', { message: "รถใหม่มาแล้ว" });
+      console.log('Response:', response.data);
+    } catch (error) {
+      console.error('Error:', error);
+    }
   };
 
   return (
@@ -319,6 +329,7 @@ function Buy() {
         <button
           type="submit"
           className="px-4 py-2 bg-[#3E5685] text-white rounded w-[364px] h-[50px]"
+          onClick={sendLineNotify}
         >
           ลงขาย
         </button>
